@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.18">
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\aws\ColourResolver.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\aws\Inventory.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\aws\impl\DynamicInventory.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\aws\impl\StaticColourResolver.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\aws\package-info.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\configuration\CoreConfiguration.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\configuration\CoreConfigurationImpl.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\constants\Constants.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\constants\Defaults.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\deployment\Deployment.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\deployment\DeploymentUtils.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\deployment\DeploymentValidator.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\deployment\impl\DeploymentUtilsImpl.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\deployment\impl\DeploymentValidatorImpl.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\deployment\impl\StandardDeployment.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\exceptions\UnknownStabilityException.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\exceptions\WildflyCommunicationException.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\exceptions\WildflyOperationExecutionException.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\exceptions\package-info.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\utils\CoreUtils.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\utils\package-info.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\DomainControllerClient.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\ModelControllerClientFactory.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\impl\DomainControllerClientImpl.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\DeployOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\GetDeploymentsForHostNameOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\GetDetailedDeploymentsStatusOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\GetResourcesOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\RedeployOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\RemoveOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\RestartSlaveOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\operations\UndeployOperation.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\core\src\main\java\au\com\agic\deploymentsync\core\wildfly\package-info.java">
+</file>
+</checkstyle>

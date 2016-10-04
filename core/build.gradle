@@ -1,0 +1,33 @@
+jar {
+	manifest {
+
+	}
+}
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+def artifactGroup = 'au.com.agic'
+def artifactVersion = '1.0.5'
+def artifactName = 'wildfly-deployments-core'
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			groupId artifactGroup
+			artifactId artifactName
+			version artifactVersion
+
+			from components.java
+		}
+	}
+	repositories {
+		maven {
+			credentials {
+				username project.hasProperty("username") ? project.getProperty("username") : ''
+				password project.hasProperty("password") ? project.getProperty("password") : ''
+			}
+			url "http://${project.hasProperty("nexus") ? project.getProperty("nexus") : ''}/nexus/content/repositories/${artifactVersion.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}/"
+		}
+	}
+}

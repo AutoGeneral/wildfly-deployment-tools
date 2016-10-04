@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.18">
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\Configuration.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\Main.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\constants\Constants.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\constants\Defaults.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\deployment\DeploymentListsComparator.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\deployment\DeploymentListsComparisonResult.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\deployment\DeploymentSynchronizer.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\deployment\impl\DeploymentListsComparatorImpl.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\deployment\impl\DeploymentListsComparisonResultImpl.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\deployment\impl\DeploymentSynchronizerImpl.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\exeptions\SynchronizationException.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\synchronizer\src\main\java\au\com\agic\deploymentsync\synchronizer\utlis\DeploymentUtils.java">
+</file>
+</checkstyle>

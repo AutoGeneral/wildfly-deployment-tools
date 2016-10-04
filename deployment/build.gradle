@@ -1,0 +1,9 @@
+jar {
+    manifest {
+        attributes 'Main-Class': 'au.com.agic.deploymentsync.deployment.Main'
+    }
+}
+
+dependencies {
+  compile project(':core')
+}

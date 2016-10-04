@@ -1,0 +1,98 @@
+def nexusProxy = 'http://prod-vm-fv-ag-snx-x1.budgetdirect.com.au:8081/nexus/content/groups/public'
+
+buildscript {
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+		mavenCentral()
+	}
+	dependencies {
+		classpath "io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE"
+		classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"
+	}
+}
+
+apply plugin: "io.spring.dependency-management"
+
+dependencyManagement {
+	imports {
+		mavenBom 'com.amazonaws:aws-java-sdk-bom:1.10.47'
+	}
+}
+
+repositories {
+	mavenLocal()
+	maven { url nexusProxy }
+}
+
+subprojects {
+
+	group 'au.com.agic'
+	version '1.0-SNAPSHOT'
+
+	apply plugin: 'checkstyle'
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: "com.github.johnrengelman.shadow"
+
+	sourceCompatibility = 1.8
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		// http://mvnrepository.com/artifact/org.wildfly.core/wildfly-controller-client
+		compile group: 'org.wildfly.core', name: 'wildfly-controller-client', version: '2.2.0.CR2'
+
+		// http://mvnrepository.com/artifact/org.wildfly.core/wildfly-cli
+		compile group: 'org.wildfly.core', name: 'wildfly-cli', version: '2.2.0.CR2'
+
+		// http://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
+		compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.10.47'
+
+		// http://mvnrepository.com/artifact/com.google.guava/guava
+		compile group: 'com.google.guava', name: 'guava', version: '19.0'
+
+		// http://mvnrepository.com/artifact/commons-codec/commons-codec
+		compile group: 'commons-codec', name: 'commons-codec', version: '1.4'
+
+		// http://mvnrepository.com/artifact/commons-io/commons-io
+		compile group: 'commons-io', name: 'commons-io', version: '2.5'
+
+        // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+
+        // https://mvnrepository.com/artifact/junit/junit
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+
+	checkstyle {
+		toolVersion = '6.18'
+		configFile = rootProject.file("${buildDir}/checkstyle.xml");
+		showViolations = true
+		ignoreFailures = false
+	}
+
+	tasks.withType(Checkstyle) {
+		ignoreFailures = false
+		reports {
+			html.destination rootProject.file("${buildDir}/reports/checkstyle.html")
+		}
+	}
+
+	task wrapper(type: Wrapper) {
+		gradleVersion = '2.13'
+	}
+
+	task downloadCheckstyleConfig << {
+		def url = 'http://gitstash/projects/AGIC-TOOLS/repos/code-standards/browse/checkstyle/checkstyle.xml?raw'
+		def file = new File("${buildDir}/checkstyle.xml").newOutputStream()
+		file << new URL(url).openStream()
+		file.close()
+	}
+
+	classes.dependsOn(downloadCheckstyleConfig)
+
+}

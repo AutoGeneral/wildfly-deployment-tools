@@ -1,0 +1,8 @@
+rootProject.name = 'wildfly-sync-scripts'
+
+include 'synchronizer'
+include 'deployment'
+include 'core'
+include 'safeguard'
+include 'integrity'
+

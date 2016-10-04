@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.18">
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\deployment\src\main\java\au\com\agic\deploymentsync\deployment\Configuration.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\deployment\src\main\java\au\com\agic\deploymentsync\deployment\Main.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\deployment\src\main\java\au\com\agic\deploymentsync\deployment\constants\Constants.java">
+</file>
+<file name="C:\Users\ashteiniko\IdeaProjects\wildfly-deployments-sync-app\deployment\src\main\java\au\com\agic\deploymentsync\deployment\constants\Defaults.java">
+</file>
+</checkstyle>
