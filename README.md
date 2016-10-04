@@ -1,4 +1,4 @@
-# Wildfly Deployments Tools
+# Wildfly Deployment Tools
 
 ## Apps:
 

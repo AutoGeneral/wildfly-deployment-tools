@@ -1,4 +1,4 @@
-rootProject.name = 'wildfly-sync-scripts'
+rootProject.name = 'wildfly-deployment-tools'
 
 include 'synchronizer'
 include 'deployment'
