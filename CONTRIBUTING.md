@@ -3,30 +3,6 @@
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change.
 
-## Building
-
-Run tests using `mocha`:
-
-```
-npm test
-```
-
-Generate code coverage uding `istanbul`:
-
-```
-npm run-script coverage
-# or
-node ./node_modules/istanbul/lib/cli.js cover --report html ./node_modules/mocha/bin/_mocha -- -R spec ./tests/server/**/*
-```
-
-Run `eslint` to check code style:
-
-```
-npm run-script lint
-# or
-npm run-script lint-web
-```
-
 ## Submitting changes
 
 Please submit a pull request to us with a clear list of what you've done
@@ -57,13 +33,8 @@ Start reading our code and you'll get the hang of it.
    ```
 
  * We use `.editorconfig`.
- * We use `eslint` with a [shared ruleset](http://gitstash/projects/AGIC-TOOLS/repos/code-standards/browse).
  * We avoid overly complex or obtuse logic, code should mostly document itself.
    Before you write a code comment think if you can make it describe itself first.
  * This is shared software. Consider the people who will read your code, and make it look nice for them.
    It's sort of like driving a car: Perhaps you love doing donuts when you're alone,
    but with passengers the goal is to make the ride as smooth as possible.
-
-Thanks,
-
-Alex Shteinikov, Online Systems
