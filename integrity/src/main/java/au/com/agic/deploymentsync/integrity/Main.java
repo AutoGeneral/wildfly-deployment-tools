@@ -28,7 +28,7 @@ final class Main {
 			System.out.println(future.get(CONFIGURATION.getTimeout(), TimeUnit.SECONDS));
 		} catch (TimeoutException exception) {
 			future.cancel(true);
-			LOGGER.warning("Execution interrupted as time limit exceeded");
+			LOGGER.warning("Execution interrupted as the time limit exceeded");
 			throw new TimeoutException(exception.getMessage());
 		}
 		executor.shutdownNow();
