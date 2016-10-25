@@ -1,5 +1,3 @@
-def nexusProxy = 'http://prod-vm-fv-ag-snx-x1.budgetdirect.com.au:8081/nexus/content/groups/public'
-
 buildscript {
 	repositories {
 		maven {
@@ -23,7 +21,7 @@ dependencyManagement {
 
 repositories {
 	mavenLocal()
-	maven { url nexusProxy }
+	maven { }
 }
 
 subprojects {
@@ -70,7 +68,7 @@ subprojects {
 
 	checkstyle {
 		toolVersion = '6.18'
-		configFile = rootProject.file("${buildDir}/checkstyle.xml");
+		configFile = rootProject.file("${rootProject.projectDir}/checkstyle.xml");
 		showViolations = true
 		ignoreFailures = false
 	}
@@ -85,14 +83,4 @@ subprojects {
 	task wrapper(type: Wrapper) {
 		gradleVersion = '2.13'
 	}
-
-	task downloadCheckstyleConfig << {
-		def url = 'http://gitstash/projects/AGIC-TOOLS/repos/code-standards/browse/checkstyle/checkstyle.xml?raw'
-		def file = new File("${buildDir}/checkstyle.xml").newOutputStream()
-		file << new URL(url).openStream()
-		file.close()
-	}
-
-	classes.dependsOn(downloadCheckstyleConfig)
-
 }
