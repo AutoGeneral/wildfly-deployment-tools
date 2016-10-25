@@ -17,6 +17,8 @@ public final class Defaults {
 
 	public static final String STABILITY = "unstable";
 
+	public static final Integer TIMEOUT = 300; // seconds
+
 	/**
 	 * AWS related defaults
 	 */

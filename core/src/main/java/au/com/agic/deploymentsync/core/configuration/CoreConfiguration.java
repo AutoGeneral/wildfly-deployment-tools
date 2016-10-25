@@ -15,4 +15,6 @@ public interface CoreConfiguration {
 	BasicAWSCredentials getAwsCredentials();
 
 	Boolean getDryRun();
+
+	Integer getTimeout();
 }

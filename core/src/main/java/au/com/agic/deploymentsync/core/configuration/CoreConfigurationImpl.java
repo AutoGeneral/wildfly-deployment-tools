@@ -17,6 +17,7 @@ public class CoreConfigurationImpl implements CoreConfiguration {
 	private final String stability;
 	private final BasicAWSCredentials awsCredentials;
 	private final Boolean dryRun;
+	private final Integer timeout;
 
 	@Override
 	public final String getWildflyLogin() {
@@ -48,6 +49,10 @@ public class CoreConfigurationImpl implements CoreConfiguration {
 		return dryRun;
 	}
 
+	@Override
+	public final Integer getTimeout() {
+		return timeout;
+	}
 
 	/**
 	 * Read system properties, check them and apply defaults if needed
@@ -70,8 +75,8 @@ public class CoreConfigurationImpl implements CoreConfiguration {
 
 		environment = System.getProperty(Constants.ENVIRONMENT_ARGUMENT_NAME, Defaults.ENVIRONMENT);
 		stability = System.getProperty(Constants.STABILITY_ARGUMENT_NAME, Defaults.STABILITY);
-
 		dryRun = Boolean.getBoolean(Constants.DRY_RUN_ARGUMENT_NAME);
+		timeout = Integer.getInteger(Constants.TIMEOUT_ARGUMENT_NAME, Defaults.TIMEOUT);
 
 		if (StringUtils.isNullOrEmpty(wildflyPassword)) {
 			throw new IllegalArgumentException(

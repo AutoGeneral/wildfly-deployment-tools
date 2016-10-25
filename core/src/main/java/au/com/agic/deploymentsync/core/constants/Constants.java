@@ -20,6 +20,8 @@ public final class Constants {
 
 	public static final String AWS_SECRET_ACCESS_KEY_ARGUMENT_NAME = "awsSecretAccessKey";
 
+	public static final String TIMEOUT_ARGUMENT_NAME = "timeout";
+
 	/**
 	 * Stability colours, names
 	 */
