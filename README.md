@@ -56,7 +56,7 @@ java -jar wildfly-deploy.jar \
     -Ddeployment=C:\tmp\wars\life-express.war \
     -DawsAccessKeyId=AAAAAABBBJJ999AA000AA \
     -DawsSecretAccessKey=111111122233344444/aaa444XXXQQQT33311111 \
-    -DdryRun=true \
+    -DdryRun=true 
 ```
 
 ## 3. Slave safeguard app
@@ -75,7 +75,7 @@ java -jar wildfly-safeguard.jar \
     -DwildflyPassword=seG^&R(a \
     -DwildflyLogin=wildflyadmin \
     -Denvironment=uat \
-    -Dstability=stable \
+    -Dstability=stable
 ```
 
 ## 4. Integrity check
@@ -87,19 +87,20 @@ How to run:
 
 ```
 java -jar wildfly-integrity-check.jar \
-    -Djavax.net.ssl.trustStore="C:\whatever\cacerts" \
+    -Djavax.net.ssl.trustStore="/home/certificates" \
     -DwildflyPassword=seG^&R(a \
     -DwildflyLogin=wildflyadmin \
     -Denvironment=uat \
     -Dstability=stable \
+    -Dtimeout=10
 ```
 
 ## Parameters
 
-### Both apps have these system properties
+### Apps use these system properties
 
-To trust our Wildfly servers self-signed sertificates you may need to pass `javax.net.ssl.trustStore`
-property with the path to a certificate store
+You may need to pass `javax.net.ssl.trustStore` property with the path to a certificate store
+if you have self-signed sertificates in your Wildfly servers
 
 #### wildflyPassword *
 Password for Wildfly domain controller management user
@@ -124,6 +125,10 @@ Default: `int`
 AWS stability name to use during apps' sync. We use colours tags in AWS and there is a builtin colour resolver
 (static for now) which resolves `stable` to `Color:green` and `unstable` to `Color:blue` tags:values
 Default: `unstable`
+
+#### timeout
+Time limit in seconds for application to run. Application will be terminated when time limit exceeded
+Default: `300`
 
 ### Branch synchronizer app specific system properties
 
