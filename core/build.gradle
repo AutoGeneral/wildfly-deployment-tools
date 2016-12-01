@@ -8,7 +8,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 def artifactGroup = 'au.com.agic'
-def artifactVersion = '2.0.0'
+def artifactVersion = '2.1.0'
 def artifactName = 'wildfly-deployments-core'
 
 publishing {

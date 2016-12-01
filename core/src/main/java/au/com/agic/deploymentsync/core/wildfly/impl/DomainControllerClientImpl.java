@@ -45,6 +45,7 @@ public class DomainControllerClientImpl implements DomainControllerClient {
 	 */
 	private static final int MAX_ATTEMPTS_FOR_OPERATION = 5;
 	private static final int TIME_BETWEEN_ATTEMPTS = 5000;
+	private static final String ENABLED_TIME = "enabled-time";
 	private static final String SYSTEM_BOOT_STRING = "System boot is in process";
 	private static final String IS_ALREADY_REGISTERED_STRING = "is already registered";
 	private static final String DUPLICATE_RESOURCE_STRING = "Duplicate resource";
@@ -117,7 +118,7 @@ public class DomainControllerClientImpl implements DomainControllerClient {
 
 				List<Deployment> deployments = new ArrayList<>();
 				for (Property property : response.get(Util.RESULT).asPropertyList()) {
-					deployments.add(new StandardDeployment(
+					final Deployment deployment = new StandardDeployment(
 						property.getName(),
 						property.getValue()
 							.get(Util.CONTENT)
@@ -125,7 +126,14 @@ public class DomainControllerClientImpl implements DomainControllerClient {
 							.asProperty()
 							.getValue()
 							.asBytes()
-					));
+					);
+
+					deployment.setEnabledTime(property
+						.getValue()
+						.get(ENABLED_TIME)
+						.asLong());
+
+					deployments.add(deployment);
 				}
 				return deployments;
 

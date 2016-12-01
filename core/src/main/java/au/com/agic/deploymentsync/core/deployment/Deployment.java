@@ -17,6 +17,10 @@ public interface Deployment {
 
 	void setForceFlag(Boolean forceFlag);
 
+	Long getEnabledTime();
+
+	void setEnabledTime(Long enabledTime);
+
 	boolean equals(Object object);
 
 	int hashCode();
