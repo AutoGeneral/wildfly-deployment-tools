@@ -7,6 +7,7 @@ import au.com.agic.deploymentsync.core.wildfly.DomainControllerClient;
 import au.com.agic.deploymentsync.core.wildfly.impl.DomainControllerClientImpl;
 
 import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.InstanceStateName;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class SafeguardTask implements Callable<String> {
 
@@ -29,10 +31,16 @@ public class SafeguardTask implements Callable<String> {
 	public String call() throws UnknownHostException {
 
 		final Inventory inventory = new DynamicInventory(configuration);
-		final List<Instance> instances = inventory.getWildflyDomainControllers();
+		final List<Instance> instances =
+			inventory.getWildflyDomainControllers()
+				.stream()
+				.filter(instance ->
+					InstanceStateName.Running.toString().equals(instance.getState().getName())
+				)
+				.collect(Collectors.toList());
 
 		if (instances.isEmpty()) {
-			LOGGER.log(Level.SEVERE, "No domain controller instances found");
+			LOGGER.log(Level.SEVERE, "No running domain controller instances found");
 			System.exit(1);
 		}
 

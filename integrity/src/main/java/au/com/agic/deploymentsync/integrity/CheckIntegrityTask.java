@@ -7,11 +7,13 @@ import au.com.agic.deploymentsync.core.deployment.DeploymentValidator;
 import au.com.agic.deploymentsync.core.deployment.impl.DeploymentValidatorImpl;
 
 import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.InstanceStateName;
 
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class CheckIntegrityTask implements Callable<String> {
 
@@ -26,11 +28,17 @@ public class CheckIntegrityTask implements Callable<String> {
 	public String call() {
 
 		final Inventory inventory = new DynamicInventory(configuration);
-		final List<Instance> instances = inventory.getWildflyDomainControllers();
 		final DeploymentValidator deploymentValidator = new DeploymentValidatorImpl();
+		final List<Instance> instances =
+			inventory.getWildflyDomainControllers()
+				.stream()
+				.filter(instance ->
+					InstanceStateName.Running.toString().equals(instance.getState().getName())
+				)
+				.collect(Collectors.toList());
 
 		if (instances.isEmpty()) {
-			LOGGER.log(Level.SEVERE, "No domain controller instances found");
+			LOGGER.log(Level.SEVERE, "No running domain controller instances found");
 			System.exit(1);
 		}
 
