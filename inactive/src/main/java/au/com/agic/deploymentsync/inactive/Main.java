@@ -1,11 +1,7 @@
 package au.com.agic.deploymentsync.inactive;
 
-import static au.com.agic.deploymentsync.inactive.constants.Defaults.DOMAIN_CONTROLLER_INACTIVITY_TIMEOUT;
-
 import au.com.agic.deploymentsync.core.aws.Inventory;
 import au.com.agic.deploymentsync.core.aws.impl.DynamicInventory;
-import au.com.agic.deploymentsync.core.configuration.CoreConfiguration;
-import au.com.agic.deploymentsync.core.configuration.CoreConfigurationImpl;
 import au.com.agic.deploymentsync.core.constants.Defaults;
 import au.com.agic.deploymentsync.core.deployment.Deployment;
 import au.com.agic.deploymentsync.core.exceptions.WildflyCommunicationException;
@@ -33,7 +29,7 @@ import java.util.stream.Collectors;
 final class Main {
 
 	private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
-	private static final CoreConfiguration CONFIGURATION = new CoreConfigurationImpl();
+	private static final Configuration CONFIGURATION = new Configuration();
 	private static final long MS = 1000;
 
 	private Main() {
@@ -57,11 +53,11 @@ final class Main {
 
 		if (latestDeployment.isPresent()) {
 			final long acceptableTime = latestDeployment.get().getEnabledTime()
-				+ DOMAIN_CONTROLLER_INACTIVITY_TIMEOUT * MS;
+				+ CONFIGURATION.getInactiveTimeout() * MS;
 
 			if (acceptableTime < Instant.now().toEpochMilli()) {
 				LOGGER.log(Level.WARNING, "Domain controllers have not been used for more than "
-					+ DOMAIN_CONTROLLER_INACTIVITY_TIMEOUT + " seconds and will be turned off...");
+					+ CONFIGURATION.getInactiveTimeout() + " seconds and will be turned off...");
 
 				stopInstances(instances);
 			} else {
