@@ -1,8 +1,11 @@
 package au.com.agic.deploymentsync.deployment;
 
+import static au.com.agic.deploymentsync.deployment.constants.Defaults.WAIT_AFTER_DOMAIN_CONTROLLER_START_ATTEMPT;
+
 import au.com.agic.deploymentsync.core.aws.Inventory;
 import au.com.agic.deploymentsync.core.aws.impl.DynamicInventory;
 import au.com.agic.deploymentsync.core.constants.Constants;
+import au.com.agic.deploymentsync.core.constants.Defaults;
 import au.com.agic.deploymentsync.core.deployment.Deployment;
 import au.com.agic.deploymentsync.core.deployment.DeploymentValidator;
 import au.com.agic.deploymentsync.core.deployment.impl.DeploymentValidatorImpl;
@@ -12,8 +15,11 @@ import au.com.agic.deploymentsync.core.utils.CoreUtils;
 import au.com.agic.deploymentsync.core.wildfly.DomainControllerClient;
 import au.com.agic.deploymentsync.core.wildfly.impl.DomainControllerClientImpl;
 
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
+import com.amazonaws.services.ec2.model.StartInstancesRequest;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -34,13 +40,49 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+
 public class DeploymentTask implements Callable<String> {
 
 	private static final Logger LOGGER = Logger.getLogger(DeploymentTask.class.getName());
+	private static final long MS = 1000;
+
 	private final Configuration configuration;
+	private final AmazonEC2 ec2;
+
+	private boolean hasDomainControllersStartAttempted = false;
 
 	public DeploymentTask(final Configuration configuration) {
 		this.configuration = configuration;
+
+		// Use credentials from arguments if possible, otherwise use default .aws/credentials
+		if (configuration.getAwsCredentials() != null) {
+			ec2 = new AmazonEC2Client(configuration.getAwsCredentials());
+		} else {
+			ec2 = new AmazonEC2Client();
+		}
+		ec2.setRegion(Defaults.AWS_REGION);
+	}
+
+	private void startStoppedWildflyDomainControllers() {
+		final Inventory inventory = new DynamicInventory(configuration);
+		final List<Instance> stoppedWildflyDomainControllers =
+			inventory.getWildflyDomainControllers()
+				.stream()
+				.filter(instance ->
+					InstanceStateName.Stopped.toString().equals(instance.getState().getName())
+				)
+				.collect(Collectors.toList());
+
+		if (stoppedWildflyDomainControllers.isEmpty()) {
+			// nothing we can do then
+		}
+
+		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest()
+			.withInstanceIds(stoppedWildflyDomainControllers
+				.stream().map(Instance::getInstanceId).collect(Collectors.toList())
+			);
+
+		ec2.startInstances(startInstancesRequest);
 	}
 
 	@Override
@@ -64,8 +106,23 @@ public class DeploymentTask implements Callable<String> {
 		}
 
 		if (instances.isEmpty()) {
-			LOGGER.log(Level.SEVERE, "No running domain controller instances found");
-			System.exit(1);
+			LOGGER.log(Level.WARNING, "No running domain controller instances found");
+
+			if (hasDomainControllersStartAttempted) {
+				LOGGER.log(Level.SEVERE, "Domain Controller start already attempted. Exiting now...");
+				System.exit(1);
+			} else {
+				LOGGER.log(Level.INFO, "Attempting to start domain controllers...");
+				startStoppedWildflyDomainControllers();
+				hasDomainControllersStartAttempted = true;
+				try {
+					Thread.sleep(WAIT_AFTER_DOMAIN_CONTROLLER_START_ATTEMPT * MS);
+				} catch (InterruptedException ex) {
+					LOGGER.log(Level.SEVERE, "Timer's dead baby. Timer's dead.");
+				}
+				call();
+				return "";
+			}
 		}
 
 		// Iterate through domain controllers and deploy artifact
