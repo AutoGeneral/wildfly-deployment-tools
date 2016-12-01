@@ -14,20 +14,12 @@ import com.amazonaws.services.ec2.model.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
  * Implementation of AWS Dynamic Inventory
  */
 public class DynamicInventory implements Inventory {
-
-	private static final Logger LOGGER = Logger.getLogger(DynamicInventory.class.getName());
-
-	// AWS instance running code
-	// http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_InstanceState.html
-	private static final int RUNNING_CODE = 16;
 
 	private final AmazonEC2 ec2;
 	private final String environment;
@@ -62,16 +54,6 @@ public class DynamicInventory implements Inventory {
 					}
 				}
 				return false;
-			})
-			// Filter instances by state
-			.filter(instance -> {
-				final int instanceStateCode = instance.getState().getCode();
-				if (instanceStateCode != RUNNING_CODE) {
-					LOGGER.log(Level.INFO, instance.getInstanceId()
-						+ " is matching " + tagName + ":" + tagValue
-						+ " tag but it's not running. State: " + instance.getState());
-				}
-				return instanceStateCode == RUNNING_CODE;
 			})
 			.collect(Collectors.toList());
 	}

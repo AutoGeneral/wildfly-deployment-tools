@@ -10,6 +10,7 @@ import au.com.agic.deploymentsync.synchronizer.exeptions.SynchronizationExceptio
 import au.com.agic.deploymentsync.synchronizer.utlis.DeploymentUtils;
 
 import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.InstanceStateName;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -34,10 +35,16 @@ final class Main {
 			new DeploymentSynchronizerImpl(CONFIGURATION);
 
 		final List<Deployment> localDeployments = getLocalDeployments();
-		final List<Instance> instances = inventory.getWildflyDomainControllers();
+		final List<Instance> instances =
+			inventory.getWildflyDomainControllers()
+				.stream()
+				.filter(instance ->
+					InstanceStateName.Running.toString().equals(instance.getState().getName())
+				)
+				.collect(Collectors.toList());
 
 		if (instances.isEmpty()) {
-			LOGGER.log(Level.SEVERE, "No domain controller instances found");
+			LOGGER.log(Level.SEVERE, "No running domain controller instances found");
 			System.exit(1);
 		}
 

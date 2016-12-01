@@ -18,6 +18,7 @@ public class StandardDeployment implements Deployment {
 	private byte[] sha1;
 	private Boolean forceFlag = false;
 	private String localPath;
+	private Long enabledTime;
 
 	public StandardDeployment(final String name) {
 		this.name = name;
@@ -62,6 +63,16 @@ public class StandardDeployment implements Deployment {
 	@Override
 	public final void setForceFlag(final Boolean forceFlag) {
 		this.forceFlag = forceFlag;
+	}
+
+	@Override
+	public Long getEnabledTime() {
+		return enabledTime;
+	}
+
+	@Override
+	public void setEnabledTime(final Long enabledTime) {
+		this.enabledTime = enabledTime;
 	}
 
 	/**

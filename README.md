@@ -6,6 +6,7 @@
 - Artifact deployment app
 - Slave safeguard app
 - Integrity check for environmnent slaves
+- Inactive check for Domain Controllers
 
 ## 1. Branch synchronizer app
 
@@ -43,6 +44,8 @@ java -jar wildfly-sync.jar \
 
 This app deploys artifact to multiple Wildfly domain controllers. You don't need to specify exact IP addresses
 of those things but AWS environment/stability tags
+
+Since version 2.0 it's trying to start Wildfly Domain controllers if they are offline
 
 How to run:
 
@@ -94,6 +97,25 @@ java -jar wildfly-integrity-check.jar \
     -Dstability=stable \
     -Dtimeout=10
 ```
+
+## 5. Inactive Domain Controller check
+
+Imagine you have a traditional Domain-Slave setup for Wildfly cluster. Most of the time your
+domain controllers will be idle and waste your money doing nothing. This application checks if
+controllers were inactive for some time and attempts to shut those EC2 instances in case we
+don't need them anymore
+
+```
+java -jar wildfly-inactive-check.jar \
+    -Djavax.net.ssl.trustStore="/home/certificates" \
+    -DwildflyPassword=seG^&R(a \
+    -DwildflyLogin=wildflyadmin \
+    -Denvironment=uat \
+    -Dstability=stable \
+    -DinactiveTimeout=60 \
+    -Dtimeout=10 
+```
+
 
 ## Parameters
 
@@ -155,6 +177,12 @@ Path to local artifact. Can be a folder - in this case first file found in that 
 mathing pattern .war|.ear will be deployed
 Default: `./`
 
+### Inactive check
+
+#### inactiveTimeout
+Time in seconds since the last deployment to domain controllers after which they are going to be 
+considered as 'inactive'
+Default: `20 * 60`
 
 # Development
 
