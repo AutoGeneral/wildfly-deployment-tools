@@ -19,22 +19,6 @@ public class Configuration extends CoreConfigurationImpl {
 	private final boolean isDeployDisabled;
 	private final boolean isUndeployDisabled;
 
-	public final String getLocalAppLibraryPath() {
-		return localAppLibraryPath;
-	}
-
-	public final Set<String> getIgnoreArtifacts() {
-		return Collections.unmodifiableSet(ignoreArtifacts);
-	}
-
-	public final boolean isDeployDisabled() {
-		return isDeployDisabled;
-	}
-
-	public final boolean isUneployDisabled() {
-		return isUndeployDisabled;
-	}
-
 	/**
 	 * Read system properties, check them and apply defaults if needed
 	 */
@@ -53,6 +37,22 @@ public class Configuration extends CoreConfigurationImpl {
 		} else {
 			ignoreArtifacts = Defaults.getIgnoredArtifacts();
 		}
-
 	}
+
+	public final String getLocalAppLibraryPath() {
+		return localAppLibraryPath;
+	}
+
+	public final Set<String> getIgnoreArtifacts() {
+		return Collections.unmodifiableSet(ignoreArtifacts);
+	}
+
+	public final boolean isDeployDisabled() {
+		return isDeployDisabled;
+	}
+
+	public final boolean isUneployDisabled() {
+		return isUndeployDisabled;
+	}
+
 }

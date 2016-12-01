@@ -63,28 +63,6 @@ public class DeploymentTask implements Callable<String> {
 		ec2.setRegion(Defaults.AWS_REGION);
 	}
 
-	private void startStoppedWildflyDomainControllers() {
-		final Inventory inventory = new DynamicInventory(configuration);
-		final List<Instance> stoppedWildflyDomainControllers =
-			inventory.getWildflyDomainControllers()
-				.stream()
-				.filter(instance ->
-					InstanceStateName.Stopped.toString().equals(instance.getState().getName())
-				)
-				.collect(Collectors.toList());
-
-		if (stoppedWildflyDomainControllers.isEmpty()) {
-			// nothing we can do then
-		}
-
-		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest()
-			.withInstanceIds(stoppedWildflyDomainControllers
-				.stream().map(Instance::getInstanceId).collect(Collectors.toList())
-			);
-
-		ec2.startInstances(startInstancesRequest);
-	}
-
 	@Override
 	public String call() throws UnknownHostException {
 		final Inventory inventory = new DynamicInventory(configuration);
@@ -107,22 +85,8 @@ public class DeploymentTask implements Callable<String> {
 
 		if (instances.isEmpty()) {
 			LOGGER.log(Level.WARNING, "No running domain controller instances found");
-
-			if (hasDomainControllersStartAttempted) {
-				LOGGER.log(Level.SEVERE, "Domain Controller start already attempted. Exiting now...");
-				System.exit(1);
-			} else {
-				LOGGER.log(Level.INFO, "Attempting to start domain controllers...");
-				startStoppedWildflyDomainControllers();
-				hasDomainControllersStartAttempted = true;
-				try {
-					Thread.sleep(WAIT_AFTER_DOMAIN_CONTROLLER_START_ATTEMPT * MS);
-				} catch (InterruptedException ex) {
-					LOGGER.log(Level.SEVERE, "Timer's dead baby. Timer's dead.");
-				}
-				call();
-				return "";
-			}
+			attemptDomainContollerStart();
+			return "";
 		}
 
 		// Iterate through domain controllers and deploy artifact
@@ -169,6 +133,54 @@ public class DeploymentTask implements Callable<String> {
 		}
 
 		return "Ready!";
+	}
+
+	/**
+	 * Attempts to start domain controllers and reruns the task
+	 *
+	 * @throws UnknownHostException
+	 */
+	private void attemptDomainContollerStart() throws UnknownHostException {
+
+		if (hasDomainControllersStartAttempted) {
+			LOGGER.log(Level.SEVERE, "Domain Controller start already attempted. Exiting now...");
+			System.exit(1);
+		} else {
+			LOGGER.log(Level.INFO, "Attempting to start domain controllers...");
+			startStoppedWildflyDomainControllers();
+			hasDomainControllersStartAttempted = true;
+			try {
+				Thread.sleep(WAIT_AFTER_DOMAIN_CONTROLLER_START_ATTEMPT * MS);
+			} catch (InterruptedException ex) {
+				LOGGER.log(Level.SEVERE, "Timer's dead baby. Timer's dead.", ex);
+			}
+			call();
+		}
+	}
+
+	/***
+	 * Sends start request to AWS EC2 API to start domain controllers
+	 */
+	private void startStoppedWildflyDomainControllers() {
+		final Inventory inventory = new DynamicInventory(configuration);
+		final List<Instance> stoppedWildflyDomainControllers =
+			inventory.getWildflyDomainControllers()
+				.stream()
+				.filter(instance ->
+					InstanceStateName.Stopped.toString().equals(instance.getState().getName())
+				)
+				.collect(Collectors.toList());
+
+		if (stoppedWildflyDomainControllers.isEmpty()) {
+			// nothing we can do then
+		}
+
+		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest()
+			.withInstanceIds(stoppedWildflyDomainControllers
+				.stream().map(Instance::getInstanceId).collect(Collectors.toList())
+			);
+
+		ec2.startInstances(startInstancesRequest);
 	}
 
 

@@ -12,10 +12,6 @@ public class Configuration extends CoreConfigurationImpl {
 
 	private final String deploymentPath;
 
-	public final String getDeploymentPath() {
-		return deploymentPath;
-	}
-
 	/**
 	 * Read system properties, check them and apply defaults if needed
 	 */
@@ -23,4 +19,9 @@ public class Configuration extends CoreConfigurationImpl {
 		deploymentPath =
 			System.getProperty(Constants.DEPLOYMENT_ARGUMENT_NAME, Defaults.DEPLOYMENT_PATH);
 	}
+
+	public final String getDeploymentPath() {
+		return deploymentPath;
+	}
+
 }

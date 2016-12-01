@@ -24,10 +24,11 @@ public final class Defaults {
 	 * AWS related defaults
 	 */
 
+	private Defaults() {
+	}
+
 	public static Set<String> getIgnoredArtifacts() {
 		return Collections.unmodifiableSet(IGNORED_ARTIFACTS);
 	}
 
-	private Defaults() {
-	}
 }

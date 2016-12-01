@@ -25,7 +25,7 @@ final class Main {
 		Future<String> future = executor.submit(new CheckIntegrityTask(CONFIGURATION));
 
 		try {
-			System.out.println(future.get(CONFIGURATION.getTimeout(), TimeUnit.SECONDS));
+			LOGGER.info(future.get(CONFIGURATION.getTimeout(), TimeUnit.SECONDS));
 		} catch (TimeoutException exception) {
 			future.cancel(true);
 			LOGGER.warning("Execution interrupted as the time limit exceeded");
