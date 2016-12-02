@@ -137,8 +137,7 @@ public class DeploymentTask implements Callable<String> {
 
 	/**
 	 * Attempts to start domain controllers and reruns the task
-	 *
-	 * @throws UnknownHostException
+	 * @throws UnknownHostException when host is unknown
 	 */
 	private void attemptDomainContollerStart() throws UnknownHostException {
 
@@ -170,10 +169,6 @@ public class DeploymentTask implements Callable<String> {
 					InstanceStateName.Stopped.toString().equals(instance.getState().getName())
 				)
 				.collect(Collectors.toList());
-
-		if (stoppedWildflyDomainControllers.isEmpty()) {
-			// nothing we can do then
-		}
 
 		final StartInstancesRequest startInstancesRequest = new StartInstancesRequest()
 			.withInstanceIds(stoppedWildflyDomainControllers

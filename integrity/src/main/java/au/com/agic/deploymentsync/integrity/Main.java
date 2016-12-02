@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 final class Main {
@@ -26,10 +27,10 @@ final class Main {
 
 		try {
 			LOGGER.info(future.get(CONFIGURATION.getTimeout(), TimeUnit.SECONDS));
-		} catch (TimeoutException exception) {
+		} catch (TimeoutException ex) {
 			future.cancel(true);
-			LOGGER.warning("Execution interrupted as the time limit exceeded");
-			throw new TimeoutException(exception.getMessage());
+			LOGGER.log(Level.SEVERE, "Execution interrupted as the time limit exceeded", ex);
+			System.exit(1);
 		}
 		executor.shutdownNow();
 	}

@@ -89,8 +89,7 @@ public class StandardDeployment implements Deployment {
 	public final boolean equals(final Object object) {
 		if (object instanceof Deployment) {
 			final Deployment deployment = (Deployment) object;
-			return deployment != null && Hex.encodeHexString(getSha1())
-				.equals(Hex.encodeHexString(deployment.getSha1()));
+			return Hex.encodeHexString(getSha1()).equals(Hex.encodeHexString(deployment.getSha1()));
 		}
 		return false;
 	}
