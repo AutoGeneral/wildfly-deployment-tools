@@ -35,6 +35,7 @@ public interface DomainControllerClient {
 
 	/**
 	 * @param deployment application's deployment to undeploy
+	 * @param serverGroup cluster server group
 	 * @return result of operation
 	 */
 	Optional<ModelNode> undeploy(Deployment deployment, String serverGroup);
