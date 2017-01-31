@@ -45,6 +45,7 @@ public class DomainControllerClientImpl implements DomainControllerClient {
 	 */
 	private static final int MAX_ATTEMPTS_FOR_OPERATION = 5;
 	private static final int TIME_BETWEEN_ATTEMPTS = 5000;
+	private static final String UNDEFINED = "undefined";
 	private static final String ENABLED_TIME = "enabled-time";
 	private static final String SYSTEM_BOOT_STRING = "System boot is in process";
 	private static final String IS_ALREADY_REGISTERED_STRING = "is already registered";
@@ -128,10 +129,13 @@ public class DomainControllerClientImpl implements DomainControllerClient {
 							.asBytes()
 					);
 
-					deployment.setEnabledTime(property
-						.getValue()
-						.get(ENABLED_TIME)
-						.asLong());
+					// Get enabled time for enabled deployments
+					if (!UNDEFINED.equals(property.getValue().get(ENABLED_TIME).toString())) {
+						deployment.setEnabledTime(property
+							.getValue()
+							.get(ENABLED_TIME)
+							.asLong());
+					}
 
 					deployments.add(deployment);
 				}
