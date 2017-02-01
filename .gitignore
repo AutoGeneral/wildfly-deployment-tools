@@ -68,3 +68,6 @@ gradle-app.setting
 # Idea things
 */gradlew
 */gradlew.bat
+
+*/build
+.DS_Store
