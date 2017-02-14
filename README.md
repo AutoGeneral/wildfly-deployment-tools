@@ -1,4 +1,4 @@
-# Wildfly Deployment Tools
+# Wildfly Deployment Tools [![Build Status](https://travis-ci.org/AutoGeneral/wildfly-deployment-tools.svg?branch=master)](https://travis-ci.org/AutoGeneral/wildfly-deployment-tools)
 
 ## Apps:
 
