@@ -4,12 +4,12 @@ language: java
 jdk:
   - oraclejdk8
 script: ./gradlew clean shadowJar
-before_deploy: 
-- mv deployment/build/libs/deployment.jar wildfly-deploy-app.jar \
-  && mv inactive/build/libs/inactive.jar wildfly-inactive-check.jar \
-  && mv integrity/build/libs/integrity.jar wildfly-integrity-check.jar \
-  && mv safeguard/build/libs/safeguard.jar wildfly-safeguard-app.jar \
-  && mv synchronizer/build/libs/synchronizer.jar wildfly-deployments-sync-app.jar 
+before_deploy:
+  - mv deployment/build/libs/deployment.jar wildfly-deploy-app.jar
+  - mv inactive/build/libs/inactive.jar wildfly-inactive-check.jar
+  - mv integrity/build/libs/integrity.jar wildfly-integrity-check.jar
+  - mv safeguard/build/libs/safeguard.jar wildfly-safeguard-app.jar
+  - mv synchronizer/build/libs/synchronizer.jar wildfly-deployments-sync-app.jar
 deploy:
   skip_cleanup: true
   provider: releases
