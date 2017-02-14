@@ -4,17 +4,23 @@ language: java
 jdk:
   - oraclejdk8
 script: ./gradlew clean shadowJar
+before_deploy: 
+- mv deployment/build/libs/deployment.jar wildfly-deploy-app.jar \
+  && mv inactive/build/libs/inactive.jar wildfly-inactive-check.jar \
+  && mv integrity/build/libs/integrity.jar wildfly-integrity-check.jar \
+  && mv safeguard/build/libs/safeguard.jar wildfly-safeguard-app.jar \
+  && mv synchronizer/build/libs/synchronizer.jar wildfly-deployments-sync-app.jar 
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
     secure: Adpc5/M1andkY17g/hUZ5AHwvof5ysfVrEo5L1wD1iloDl95iArLLR5MZVze5OAMAAIUaogoi7fQJsyABgSsEyrQJh/ex6eDyIPcWVPZsH4jZH2s7CAcyT4C5u3NdBZBYEz3CDhNa/3NGOeWTch+gYs6/pOgO9/OKwCjLt03GaUn2Y4nOIbMjy8awPM65mcvACmMNmMnXWFARxmGSF9EHBb6xcrEhyw47AUZzj6t6XSGLj3i9Ync7tGf8MsEHwUv7kHEWhh9haB0+53xMrxkL5Lw+YpbSGFzz6xRaKgEOKqn5qlWYcnd/C05Tq2/h/FdLzXxA/gXrqKrdF1ej338Lz8DnT2pWEtp2eVxF8T4L4cw9QsoxkL+YdyO87AM7PMRrv86oji1ycO/fVZ6CWFKUDn2nLKnQhxZPmCRI050YPBv3wfdeiQTt2hhWgOpik+WqtifI2PLOovrONEVBw9l7pXBCVoK7ZXM1NYtTXau7pX0M16ArGHroZ3G4W2lzZj9ikGGyBgNkzEibVNvOBB4yuQi/hGQ1L1t2dXPzeg7phidcvfW9oN74oShJA7kT8dZItS2QOOiHTg3reULGtGd5Pb61RC/NHPiYytyrfc9eE3+/qNrTOPDPLchrPEQxdhdVWGVBpC8ZhIq55N++FAgttPOTJ4eUmNx9nAjePYkPqk=
   file:
-    - deployment/build/libs/deployment.jar
-    - inactive/build/libs/inactive.jar
-    - integrity/build/libs/integrity.jar
-    - safeguard/build/libs/safeguard.jar
-    - synchronizer/build/libs/synchronizer.jar
+    - wildfly-deploy-app.jar
+    - wildfly-deployments-sync-app.jar
+    - wildfly-inactive-check.jar
+    - wildfly-integrity-check.jar
+    - wildfly-safeguard-app.jar
   on:
     repo: AutoGeneral/wildfly-deployment-tools
     tags: true
